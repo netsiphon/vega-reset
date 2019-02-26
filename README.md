@@ -1,8 +1,8 @@
 # AMD Vega 56/64 Reset Patch
 
-Due to the architecture of Vega 10 and the lack of appropriate reset code for its built-in PCIe switch, until said reset code exists one can disable PCIe resets for their Vega card by applying this patch.  There appears to be an actual reset patch in the works but no word since last year.  
+Due to the architecture of Vega 10 and the lack of appropriate reset code for its built-in PCIe switch, until said reset code exists, one can disable PCIe resets for their Vega card by applying this patch.  There appears to be an actual reset patch in the works but no word since last year.  
 
-Patch from `https://gist.github.com/numinit/1bbabff521e0451e5470d740e0eb82fd`  
+Patch from https://gist.github.com/numinit/1bbabff521e0451e5470d740e0eb82fd
 
 ## Ubuntu 18.04 LTS example:
 ### Download the latest full kernel release version ...example here is 4.20
@@ -10,7 +10,7 @@ Patch from `https://gist.github.com/numinit/1bbabff521e0451e5470d740e0eb82fd`
 wget https://github.com/torvalds/linux/archive/v4.20.zip
 unzip v4.20.zip
 ```
-### Clone this repo
+### Clone this repo and patch the kernel source
 ```
 git clone https://github.com/netsiphon/vega-reset.git
 cd vega-reset/
