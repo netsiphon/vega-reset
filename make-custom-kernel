@@ -1,0 +1,47 @@
+#!/bin/bash
+
+CUSTOM_KERNEL_DIR="$1"
+BOOT_CONFIG="$2"
+THREADS=16
+
+if [ ! -e "$CUSTOM_KERNEL_DIR/Kconfig" ]; then
+    echo "Bad kernel source directory"
+    exit 1
+fi
+
+echo "good"
+if [ ! -e "/boot/$BOOT_CONFIG" ]; then
+    echo "Missing config file"
+    exit 1
+fi
+echo "good"
+
+# Extract kernel name
+KERNEL_NAME=`basename "$CUSTOM_KERNEL_DIR"`
+
+#. "$CUSTOM_KERNEL_DIR"/Makefile
+VERSION=`cat "$CUSTOM_KERNEL_DIR"/Makefile | grep -Po '(?<=VERSION = )([\d]+)'`
+PATCHLEVEL=`cat "$CUSTOM_KERNEL_DIR"/Makefile | grep -Po '(?<=PATCHLEVEL = )([\d]+)'`
+SUBLEVEL=`cat "$CUSTOM_KERNEL_DIR"/Makefile | grep -Po '(?<=SUBLEVEL = )([\d]+)'`
+EXTRAVERSION=`cat "$CUSTOM_KERNEL_DIR"/Makefile | grep -Po '(?<=EXTRAVERSION = )([\d\w\-_]+)'`
+
+KERNEL_SUBNAME="$VERSION.$PATCHLEVEL.$SUBLEVEL$EXTRAVERSION"
+
+echo "$KERNEL_NAME"
+echo "$KERNEL_SUBNAME"
+
+cd "$CUSTOM_KERNEL_DIR"
+cp "/boot/$BOOT_CONFIG" .config
+
+yes '' | make oldconfig
+make clean
+make -j $THREADS deb-pkg LOCALVERSION=-custom > /dev/null
+cd ..
+sudo dpkg -i "linux-headers-$KERNEL_SUBNAME-custom_$KERNEL_SUBNAME-custom-1_amd64.deb" \
+"linux-image-$KERNEL_SUBNAME-custom_$KERNEL_SUBNAME-custom-1_amd64.deb" \
+"linux-image-$KERNEL_SUBNAME-custom-dbg_$KERNEL_SUBNAME-custom-1_amd64.deb" \
+"linux-libc-dev_$KERNEL_SUBNAME-custom-1_amd64.deb"
+
+echo "Done!"
+exit 0
+
