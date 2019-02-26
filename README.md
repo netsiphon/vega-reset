@@ -14,7 +14,7 @@ unzip v4.20.zip
 ```
 git clone https://github.com/netsiphon/vega-reset.git
 cd vega-reset/
-patch -d ../linux-4.20 -p0 -i fix-vega-reset.patch
+patch -d ../linux-4.20 -p1 < fix-vega-reset.patch
 ```
 All hunks must succeed to proceed. If they don't look for the failed hunk and manually correct it if you can.  
 
