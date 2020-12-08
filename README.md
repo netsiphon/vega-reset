@@ -1,3 +1,5 @@
+NO LONGER NEEDED for AMD PCI resets...please see https://github.com/gnif/vendor-reset for a working dkms module that fulfills this need.
+
 # AMD Vega 56/64 Reset Patch
 
 Due to the architecture of Vega 10 and the lack of appropriate reset code for its built-in PCIe switch, until said reset code exists, one can disable PCIe resets for their Vega card by applying this patch.  There appears to be an actual reset patch in the works but no word since last year.  
