@@ -1,4 +1,4 @@
-NO LONGER NEEDED for AMD PCI resets...please see https://github.com/gnif/vendor-reset for a working dkms module that fulfills this need.
+## NO LONGER NEEDED for AMD PCI resets...please see https://github.com/gnif/vendor-reset for a working dkms module that fulfills this need.
 
 # AMD Vega 56/64 Reset Patch
 
